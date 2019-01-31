@@ -4,10 +4,22 @@
 
 <ul>
   {{#each burgers}}
+    {{#unless devoured}}
   <li>
 	  {{burger_name}}
-	  	<button class="change-sleep" data-id="{{id}}" data-newDevour="{{sleep}}">Devour!</button>
+	  	<button class="change-devour" data-id="{{id}}" data-newdevour="{{devoured}}">Devour!</button>
   </li>
+  {{/unless}}
+  {{/each}}
+</ul>
+<h2>list of devoured burgers</h2>
+<ul>
+  {{#each burgers}}
+  {{#if devoured}}
+  <li>
+	  {{burger_name}}
+  </li>
+  {{/if}}
   {{/each}}
 </ul>
 
@@ -23,32 +35,30 @@
 </form>
 <script>
 
-  $(".change-devour").on("click", function(event) {
-    var id = $(this).data("id");
-    var devoured = $(this).data("newDevour");
+   $(".change-devour").on("click", event => {
+        const id = $(event.currentTarget).data("id");
+        const newDevour = $(event.currentTarget).data("newdevour");
 
-    var newDevourState = {
-      devoured: devoured
-    };
+        const newDevourState = {
+            devoured: newDevour
+        }
 
-    // Send the PUT request.
-    $.ajax("/api/burgers/" + id, {
-      type: "PUT",
-      data: newDevourState
-    }).then(
-      function() {
-        console.log("changed sleep to", newDevourState);
-        // Reload the page to get the updated list
-        location.reload();
-      }
-    );
-  });
+        $.ajax("/api/burgers/" + id, {
+            type: "PUT",
+            data: newDevourState
+        })
+            .then( () =>{
+                console.log("changed devoured to", newDevour);
+
+                location.reload();
+            })
+    });
 
 
 	  $(".create-form").on("submit", function(event) {
     // Make sure to preventDefault on a submit event.
     event.preventDefault();
-
+    console.log("clicked create");
     var newBurger = {
       burger_name: $("#BurgerInput").val().trim()
     };
