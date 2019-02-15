@@ -1,9 +1,6 @@
 USE burgers_db;
-select * from burgers
 
-INSERT INTO burgers 
-values(1,'cheeseburger', false);
-INSERT INTO burgers 
-values(2,'bacon burger', false);
-INSERT INTO burgers 
-values(3,'blue cheese burger', false);
+
+INSERT INTO burgers (burger_name, devoured) VALUES ('cheese burger', false);
+INSERT INTO burgers (burger_name, devoured) VALUES ('bacon burger', false);
+INSERT INTO burgers (burger_name, devoured) VALUES ('blue cheese burger', false);
